@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111f3b">
+  <title>每日方案记录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">DAILY PLAN TRACKER</p><h1>每日方案记录</h1></div>
+        <div class="top-actions"><span id="saveStatus" class="save-status"><i></i>数据已自动保存</span><button id="cloudSyncBtn" class="secondary-btn cloud-sync-btn" type="button">☁ 云同步</button><button id="addPlanBtn" class="primary-btn"><span>＋</span>新增方案</button></div>
+      </header>
+      <section id="overview" class="stats-grid">
+        <article class="stat-card stat-dark"><p>累计净利润</p><strong id="totalProfit">¥0</strong><div class="hero-meta"><span id="recordCount">0 笔记录</span><span id="recordHint">0 个方案</span></div></article>
+        <article class="stat-card stat-focus"><div class="stat-icon blue">→</div><div><p>本轮需要资金</p><strong id="currentExposureValue">¥0</strong><span id="doublingCount">0 个方案正在翻倍</span></div></article>
+        <article class="stat-card"><div class="stat-icon blue">¥</div><div><p>累计投入</p><strong id="totalStake">¥0</strong><span id="maxLevel">最高第 1 档</span></div></article>
+        <article class="stat-card"><div class="stat-icon amber">%</div><div><p>整体战绩</p><strong id="winRate">0%</strong><span><b id="winCount">0胜</b> · <b id="lossCount">0负</b></span></div></article>
+      </section>
+      <nav class="workspace-tabs"><button class="workspace-tab active" data-view="execute">执行面板</button><button class="workspace-tab" data-view="stats">数据统计</button><button class="workspace-tab" data-view="history">操作记录</button></nav>
+      <section class="view-panel active" data-panel="execute"><section class="content-head"><div><h2>现在要做的方案</h2><p>确认当前内容和金额，然后直接记录命中或未中。</p></div><div class="filters"><button class="filter active" data-filter="all">全部</button><button class="filter" data-filter="足球">足球</button><button class="filter" data-filter="篮球">篮球</button><button class="filter" data-filter="进球数">进球数</button></div></section><section id="planGrid" class="plan-grid"></section></section>
+      <section class="view-panel" data-panel="stats"><section class="summary-section"><div class="section-title"><div><h2>方案数据统计</h2><p>按累计纯利排序，用于比较不同方案表现。</p></div><div id="summaryHint" class="summary-hint">暂无统计</div></div><div class="profit-breakdown"><div><span>盈利合计</span><strong id="grossProfit">¥0</strong></div><div><span>亏损合计</span><strong id="grossLoss">¥0</strong></div></div><div id="planSummary" class="summary-table"></div></section></section>
+      <section class="view-panel" data-panel="history"><section id="history" class="history-section"><div class="section-title"><div><h2>操作记录</h2><p>每一次命中和未中都会保存在这里。</p></div><button id="clearDayBtn" class="text-btn danger">清空全部记录</button></div><div id="historyList" class="history-list"></div></section></section>
+    </main>
+  </div>
+  <dialog id="planDialog"><form id="planForm" method="dialog"><input name="planId" type="hidden"><div class="dialog-head"><div><p class="eyebrow">PLAN DETAILS</p><h2 id="planDialogTitle">新增方案</h2></div><button type="button" class="icon-btn" data-close>×</button></div><label>方案名称（可选择或输入新增）<input name="name" list="planNameOptions" autocomplete="off" placeholder="选择已有名称，或直接输入新名称" required><datalist id="planNameOptions"></datalist></label><div class="form-row"><label>分类<select name="sport"><option>足球</option><option>篮球</option><option>进球数</option><option>其他</option></select></label><label>基础金额<input name="baseStake" type="number" min="1" value="100" required></label></div><label>方案内容 / 备注<textarea name="selection" rows="3" placeholder="例如：011 负；012 胜"></textarea></label><div class="dialog-actions"><button type="button" class="secondary-btn" data-close>取消</button><button id="planSubmitText" class="primary-btn" type="submit">保存方案</button></div></form></dialog>
+  <dialog id="recordDialog"><form id="recordForm" method="dialog"><input name="planId" type="hidden"><input name="result" type="hidden"><div class="dialog-head"><div><p class="eyebrow">RECORD RESULT</p><h2 id="recordTitle">记录结果</h2></div><button type="button" class="icon-btn" data-close>×</button></div><div id="recordOutcome" class="record-outcome"></div><div class="result-stake-box"><label for="recordStake">本次金额</label><input id="recordStake" name="stake" type="number" min="0.01" step="0.01" required><small id="recordNextHint"></small></div><label>本次方案内容<input name="selection" placeholder="编号、玩法或简短说明"></label><div id="oddsFields" class="form-row"><label>实际赔率<input id="oddsInput" name="odds" type="number" min="1.01" step="0.01" value="2.00" required></label><label>预计本次纯利<input id="profitPreview" value="¥0" disabled></label></div><label>备注（可选）<textarea name="note" rows="2" placeholder="补充说明"></textarea></label><div class="dialog-actions"><button type="button" class="secondary-btn" data-close>取消</button><button id="recordSubmit" class="primary-btn" type="submit">确认记录</button></div></form></dialog>
+  <dialog id="confirmDialog" class="confirm-dialog"><form id="confirmForm" method="dialog"><input name="action" type="hidden"><input name="targetId" type="hidden"><div class="confirm-icon">!</div><h2 id="confirmTitle">确认操作</h2><p id="confirmMessage">请确认是否继续。</p><div class="dialog-actions confirm-actions"><button type="button" class="secondary-btn" data-close>取消</button><button class="danger-btn" type="submit">确认删除</button></div></form></dialog>
+  <dialog id="syncDialog" class="sync-dialog"><form id="syncForm"><div class="dialog-head"><div><p class="eyebrow">CLOUD SYNC</p><h2>跨设备云同步</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="sync-intro">手机和电脑填写同一个同步码，就会使用同一套方案和记录。</p><label>同步码<div class="sync-code-row"><input id="syncCodeInput" name="syncCode" autocomplete="off" placeholder="首次使用请生成同步码"><button id="generateSyncCode" class="secondary-btn" type="button">生成</button></div></label><div id="cloudStatus" class="cloud-status">尚未连接云端</div><div class="sync-help">请保存好同步码。新设备输入相同同步码后，会自动下载云端数据。</div><div class="dialog-actions sync-actions"><button id="disconnectSync" class="text-btn danger" type="button">断开同步</button><button id="copySyncCode" class="secondary-btn" type="button">复制同步码</button><button class="primary-btn" type="submit">连接并同步</button></div></form></dialog>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
