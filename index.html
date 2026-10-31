@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261031-2">
 </head>
 <body>
   <div class="app-shell">
@@ -34,6 +34,6 @@
   <dialog id="confirmDialog" class="confirm-dialog"><form id="confirmForm" method="dialog"><input name="action" type="hidden"><input name="targetId" type="hidden"><div class="confirm-icon">!</div><h2 id="confirmTitle">确认操作</h2><p id="confirmMessage">请确认是否继续。</p><div class="dialog-actions confirm-actions"><button type="button" class="secondary-btn" data-close>取消</button><button class="danger-btn" type="submit">确认删除</button></div></form></dialog>
   <dialog id="syncDialog" class="sync-dialog"><form id="syncForm"><div class="dialog-head"><div><p class="eyebrow">CLOUD SYNC</p><h2>跨设备云同步</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="sync-intro">手机和电脑填写同一个同步码，就会使用同一套方案和记录。</p><label>同步码<div class="sync-code-row"><input id="syncCodeInput" name="syncCode" autocomplete="off" placeholder="首次使用请生成同步码"><button id="generateSyncCode" class="secondary-btn" type="button">生成</button></div></label><div id="cloudStatus" class="cloud-status">尚未连接云端</div><div class="sync-help"><b>旧电脑：</b>点“上传本机数据”。<b>手机或新设备：</b>点“下载云端数据”。</div><div class="dialog-actions sync-actions"><button id="disconnectSync" class="text-btn danger" type="button">断开同步</button><button id="copySyncCode" class="secondary-btn" type="button">复制同步码</button><button id="uploadLocalSync" class="secondary-btn sync-upload-btn" type="button">上传本机数据</button><button class="primary-btn" type="submit">下载云端数据</button></div></form></dialog>
   <div id="toast" class="toast"></div>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261031-2"></script>
 </body>
 </html>
