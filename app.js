@@ -53,7 +53,7 @@ function recordProfit(record){
 }
 const signedMoney=v=>`${v>0?"+":v<0?"-":""}¥${Math.abs(Number(v)).toLocaleString("zh-CN",{maximumFractionDigits:2})}`;
 const profitClass=v=>v>0?"profit-positive":v<0?"profit-negative":"";
-const sportIcon=s=>s==="篮球"?"🏀":s==="进球数"?"🥅":s==="足球"?"⚽":"📌";
+const sportIcon=s=>s==="篮球"?"🏀":s==="进球数"?"🥅":s==="半全场"?"⇅":s==="足球"?"⚽":"📌";
 const escapeHtml=(v="")=>String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c]);
 function renderPlanNameOptions(){const names=[...new Set(state.plans.map(p=>p.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"zh-CN"));document.querySelector("#planNameOptions").innerHTML=names.map(name=>`<option value="${escapeHtml(name)}"></option>`).join("")}
 function render(){renderPlanNameOptions();renderStats();renderSummary();renderPlans();renderHistory()}
